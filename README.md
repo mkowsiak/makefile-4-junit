@@ -40,3 +40,56 @@ make
 ```
 
 and that's it.
+
+# Benchmark
+
+## Test
+
+```
+> time make
+...
+...
+
+real	0m2.780s
+user	0m4.941s
+sys	0m0.306s
+
+> time mvn test
+...
+...
+
+real	0m5.359s
+user	0m9.764s
+sys	0m0.533s
+```
+
+## Clean and test
+
+```
+# Clean, compile and test
+> time (make clean; make test)
+...
+...
+
+real	0m4.497s
+user	0m4.798s
+sys	0m0.373s
+
+# Clean, compile and test
+> time (mvn clean; mvn test)
+...
+...
+
+real	0m9.310s
+user	0m17.741s
+sys	0m0.843s
+
+# Firs execution ever
+> time mvn test
+...
+...
+
+real	0m43.291s
+user	0m20.329s
+sys	0m2.567s
+```

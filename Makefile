@@ -15,7 +15,7 @@ dirs:
 	-mkdir -p lib
 
 compile-java: dirs
-	$(JAVA_HOME)/bin/javac -d target src/main/sample/*.java
+	$(JAVA_HOME)/bin/javac -d target/classes src/main/java/sample/*.java
 
 junit-download:
 	curl -s -z lib/$(JUnit.jar) \
@@ -23,10 +23,14 @@ junit-download:
           $(JUnit.mvn)
 
 compile-test: compile-java junit-download
-	$(JAVA_HOME)/bin/javac -d target -cp lib/$(JUnit.jar):target src/test/sample/*.java
+	$(JAVA_HOME)/bin/javac -d target/test-classes \
+          -cp lib/$(JUnit.jar):target/classes \
+          src/test/java/sample/*.java
 
 test: compile-test
-	$(JAVA_HOME)/bin/java -jar lib/$(JUnit.jar) --class-path target --scan-class-path
+	$(JAVA_HOME)/bin/java -jar lib/$(JUnit.jar) \
+           --class-path target/classes:target/test-classes \
+           --scan-class-path
 
 clean:
 	-rm -rf lib
